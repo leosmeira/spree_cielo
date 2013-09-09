@@ -1,5 +1,5 @@
 pt-BR:
-  not_supported: Não suportado
+  must_authorize_for_regular_cielo: Purchase não pode ser chamado diretamente.
   verify: Verificar
   order_not_found: Pedido não encontrado
   payment_not_identified: Pagamento ainda não identificado

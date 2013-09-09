@@ -12,12 +12,5 @@ module Cielo
     def root_attributes
       %w(url_retorno autorizar capturar campo_livre bin)
     end
-    def forma_pagamento_produto
-      if forma_pagamento_parcelas > 1
-        parcelado_por == "loja" ? 2 : 3
-      else
-        1
-      end
-    end
   end
 end
