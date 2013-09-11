@@ -3,8 +3,8 @@ module Cielo
   module Transaction
     class Base
       include ActiveAttr::Model
-      # BANDEIRAS = %w(visa mastercard elo diners discovery)
-      BANDEIRAS = %w(visa mastercard elo diners)
+      BANDEIRAS = %w(visa mastercard elo diners discover amex jcb aura)
+#     BANDEIRAS = %w(visa mastercard elo diners)
       INDICADORES = [0, 1, 2, 9]
       IDIOMAS = %w(PT EN ES)
       STATUSES = {

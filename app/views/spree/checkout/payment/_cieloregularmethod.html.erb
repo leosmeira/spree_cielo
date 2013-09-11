@@ -1,20 +1,41 @@
 <%= hidden_field "payment_source[#{payment_method.id}]", 'order_id', value: @order.id %>
 <% param_prefix = "payment_source[#{payment_method.id}]" %>
 <div class="span3">
-	<%= label_tag "Bandeira *" %>
-	<%= select_tag "#{param_prefix}[cc_type]", options_for_select(Cielo::Transaction::Base::BANDEIRAS.map{|b|[b.capitalize, b]}) %>
+	<%#= label_tag "Bandeira *" %>
+	<%= select_tag "#{param_prefix}[cc_type]", options_for_select(Cielo::Transaction::Base::BANDEIRAS.map{|b|[b.capitalize, b]}), prompt: '* Selecione a bandeira *', class: "bandeiras" %>
 	<% (1..payment_method.preferred_maximo_parcelas).each do |instalment| %>
-		<p>
+		<p class="<%= instalment > 1 ? 'parcelas' : 'avista' %>">
 			<%= radio_button_tag "#{param_prefix}[instalments]", instalment, instalment==1 %>
-			<%= "#{instalment}x de #{number_to_currency(@order.total/instalment.to_f)}" %>
+			<% if instalment > 1 %>
+				<%= "#{instalment}x de #{number_to_currency(@order.total/instalment.to_f)}" %>
+			<% else %>
+				<%= "#{number_to_currency(@order.total)} à vista" %>
+			<% end %>
 		</p>
 	<% end %>
 </div>
-<div class="span5">
-	<ul class="thumbnails cards">
-		<li class="span1"><%= link_to content_tag(:span, "", :class => "visa"), "#", :class => "thumbnail", :data => {:card => "Visa"} %></li>
-		<li class="span1"><%= link_to content_tag(:span, "", :class => "mastercard"), "#", :class => "thumbnail", :data => {:card => "Mastercard"} %></li>
-		<li class="span1"><%= link_to content_tag(:span, "", :class => "diners"), "#", :class => "thumbnail", :data => {:card => "Diners"} %></li>
-		<li class="span1"><%= link_to content_tag(:span, "", :class => "elo"), "#", :class => "thumbnail", :data => {:card => "Elo"} %></li>
-	</ul>
-</div>
+
+<%# Deixa o campo de seleção de bandeiras obrigatório quando o método de pagamento é a CIELO %>
+<script>
+	// Id do método de pagamento da cielo
+	var id = <%= payment_method.id %>
+	
+	// Executa ao modificar o método de pagamento
+	$("input[name='order[payments_attributes][][payment_method_id]']:radio").change(function(){
+		
+		// Se o método escolhido for cielo, o select da bandeira será obrigatória
+		if ( $(this).val() == id ){
+			$('select.bandeiras').prop("required", true);
+		}else{
+			$('select.bandeiras').removeAttr('required');
+		}
+	});
+	
+	// o select da bandeira será obrigatória se o método de pagamento for cielo ao iniciar a página
+	if ( $("#order_payments_attributes__payment_method_id_"+id).is(":checked") ) {
+		$('select.bandeiras').prop("required", true);
+	}
+	
+	//Incicializa as parcelas - necessário o PAYMENT.JS
+	configura_parcelas($("select.bandeiras"));
+</script>
