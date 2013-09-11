@@ -18,6 +18,10 @@ module Spree
     def purchase
       raise StandardError.new(I18n.t(:must_authorize_for_regular_cielo))
     end
-
+    
+    def auto_capture?
+        false
+    end
+      
   end
 end
