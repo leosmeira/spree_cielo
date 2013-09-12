@@ -1,3 +1,5 @@
+//= require msdropdown/jquery.dd.min
+
 function configura_parcelas(s){
 	
 	if (s.val() == '') {
@@ -20,6 +22,12 @@ function configura_parcelas(s){
 }
 
 $(function(){
+	// Modifica o select das bandeiras
+	$("select.bandeiras").msDropdown({roundedBorder:false});
+	
+	//Incicializa as parcelas
+	configura_parcelas($("select.bandeiras"));
+	
 	// Executa ao modificar a bandeira do cartão
 	$("select.bandeiras").change(function(){	
 		configura_parcelas($(this));	

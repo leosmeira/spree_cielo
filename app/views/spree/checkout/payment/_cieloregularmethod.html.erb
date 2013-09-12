@@ -1,8 +1,7 @@
 <%= hidden_field "payment_source[#{payment_method.id}]", 'order_id', value: @order.id %>
 <% param_prefix = "payment_source[#{payment_method.id}]" %>
 <div class="span3">
-	<%#= label_tag "Bandeira *" %>
-	<%= select_tag "#{param_prefix}[cc_type]", options_for_select(Cielo::Transaction::Base::BANDEIRAS.map{|b|[b.capitalize, b]}), prompt: '* Selecione a bandeira *', class: "bandeiras" %>
+	<%= select_tag "#{param_prefix}[cc_type]", options_for_select([["Bandeira: *","",{"data-description" => "Selecione o seu cartão de crédito"}]] + Cielo::Transaction::Base::BANDEIRAS.map{|b|[b.capitalize, b, {"data-image" => "/assets/payment/#{b}.png"}]}), class: "bandeiras" %>
 	<% (1..payment_method.preferred_maximo_parcelas).each do |instalment| %>
 		<p class="<%= instalment > 1 ? 'parcelas' : 'avista' %>">
 			<%= radio_button_tag "#{param_prefix}[instalments]", instalment, instalment==1 %>
@@ -15,8 +14,12 @@
 	<% end %>
 </div>
 
-<%# Deixa o campo de seleção de bandeiras obrigatório quando o método de pagamento é a CIELO %>
+
 <script>
+	//
+	// Deixa o campo de seleção de bandeiras obrigatório quando o método de pagamento é a CIELO
+	//
+	
 	// Id do método de pagamento da cielo
 	var id = <%= payment_method.id %>
 	
@@ -35,7 +38,5 @@
 	if ( $("#order_payments_attributes__payment_method_id_"+id).is(":checked") ) {
 		$('select.bandeiras').prop("required", true);
 	}
-	
-	//Incicializa as parcelas - necessário o PAYMENT.JS
-	configura_parcelas($("select.bandeiras"));
+
 </script>
