@@ -12,8 +12,8 @@ function configura_parcelas(s){
 		$(".avista").show();
 		$(".parcelas").show();
 		
-		// Bandeira Discover aceita apenas pagamentos à vista
-		if (s.val() == 'discover') {
+		// Bandeira Discover e JCB aceitam apenas pagamentos à vista
+		if (s.val() == 'discover' || s.val() == 'jcb' ) {
 			$(".parcelas").hide();
 			$('.avista input').prop('checked', true);
 		}
