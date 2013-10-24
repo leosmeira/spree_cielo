@@ -16,6 +16,10 @@ module Spree
     end
 
     def purchase
+      # ERROR
+      # Se estiver entrando neste método é por causa que o spree está com a configuração auto_capture = true. 
+      # Esta gem só funciona se o auto_capture estiver desabilitado!
+      
       raise StandardError.new(I18n.t(:must_authorize_for_regular_cielo))
     end
     

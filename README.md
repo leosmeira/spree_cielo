@@ -16,6 +16,9 @@ Rode a task de instalação:
 	
 Após feita a instalação e migração, acesse a administração do spree, vá em Configuração -> Métodos de Pagamento e adicione um novo método selecionando `Spree::Gateway::Cielo`.
 
+Para funcionar no Spree_v1.2, o auto_capture tem que estar falso!
+
+
 ## Adaptação
 
 Caso queira enviar um e-mail ao usuário quando a compra for aprovada pelo cielo, sobrescreva a máquina de estados do `Spree::Payment` em sua aplicação para fazer o envio do e-mail (a classe PaymentMailer não existe, e precisa ser criada por você):
