@@ -3,8 +3,7 @@ module Cielo
   module Transaction
     class Base
       include ActiveAttr::Model
-      #BANDEIRAS = %w(visa mastercard elo diners discover amex jcb aura) # Bandeira Amex ainda não liberada pela Cielo.
-      BANDEIRAS = %w(visa mastercard elo diners discover jcb aura)
+      BANDEIRAS = %w(visa mastercard elo diners discover amex jcb aura)
       INDICADORES = [0, 1, 2, 9]
       IDIOMAS = %w(PT EN ES)
       STATUSES = {

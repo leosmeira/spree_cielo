@@ -8,7 +8,10 @@ module Spree
     attr_accessible :order_id, :cc_type, :instalments
     
     def process!(payment)
-      redirect_url = "#{Spree::Config[:site_url]}/cielo/orders/#{order.number}/payments/#{payment.id}/verify"
+      
+      complete_site_url = "http://" + Spree::Config[:site_url].gsub(/http:|https:|\//,"")
+      
+      redirect_url = "#{complete_site_url}/cielo/orders/#{order.number}/payments/#{payment.id}/verify"
 
       cielo_regular_transaction = ::Cielo::Transaction::Regular.new(
         dados_ec_numero: payment.payment_method.preferred_numero_afiliacao,
