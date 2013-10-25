@@ -3,7 +3,7 @@
 <div class="span3">
 	<%= select_tag "#{param_prefix}[cc_type]", options_for_select([["Bandeira: *","",{"data-description" => "Selecione o seu cartão de crédito"}]] + Cielo::Transaction::Base::BANDEIRAS.map{|b|[b.capitalize, b, {"data-image" => "/assets/payment/#{b}.png"}]}), class: "bandeiras" %>
 	<% (1..payment_method.preferred_maximo_parcelas).each do |instalment| %>
-		<p class="<%= instalment > 1 ? 'parcelas' : 'avista' %>">
+		<p class="<%= instalment > 1 ? 'parcelas' : 'avista' %>" value="<%= @order.total/instalment.to_f %>">
 			<%= radio_button_tag "#{param_prefix}[instalments]", instalment, instalment==1 %>
 			<% if instalment > 1 %>
 				<%= "#{instalment}x de #{number_to_currency(@order.total/instalment.to_f)}" %>

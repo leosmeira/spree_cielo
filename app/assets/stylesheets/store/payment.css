@@ -3,4 +3,5 @@
 */
 
 #payment p.avista, #payment p.parcelas { padding:0px; display:none;}
-.dd { width:220px !important; }
+.dd { width:220px !important; margin-bottom:10px;}
+.dd .ddChild li { height: 44px; }

@@ -18,13 +18,25 @@ function configura_parcelas(s){
 			$('.avista input').prop('checked', true);
 		}
 		
+		// Removendo parcelas menores que R$ 5,00 - Regra da Cielo
+		$( ".parcelas" ).each(function() {
+		    if($(this).attr("value") < 5){
+		    	$(this).hide();
+		    }
+		});
+
+		
 	}
 }
 
 $(function(){
 	// Modifica o select das bandeiras
-	$("select.bandeiras").msDropdown({roundedBorder:false});
-	
+	$("select.bandeiras").msDropdown({
+		roundedBorder: false,
+		openDirection: 'alwaysDown', //auto || alwaysUp || alwaysDown
+	});
+
+		
 	//Incicializa as parcelas
 	configura_parcelas($("select.bandeiras"));
 	
